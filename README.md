@@ -62,10 +62,9 @@ GET http://localhost:8080/main/getuser/{email}
 
 - Subsequent calls: user retrieved from Redis cache (method should not execute again).
 
-🧠 How the Caching Works
+## 🧠 How the Caching Works
 The UserService.findByEmail(...) method is annotated with:
 @Cacheable(value = "users", key = "#email")
-
 - This means results of this method are stored in the Redis cache named users.
 - By  default, Spring’s Redis cache uses Java serialization (binary blobs). To avoid issues like java.io.InvalidClassException, we configure the cache to use JSON serialization instead.
 - The custom RedisConfig class sets:
@@ -73,12 +72,12 @@ The UserService.findByEmail(...) method is annotated with:
   - GenericJackson2JsonRedisSerializer (with Jackson) for values
   - Enables storing of values as JSON, making them readable and version-tolerant
 
-##Why Use JSON Serialization
+## Why Use JSON Serialization
 - JSON is human-readable (you can inspect cached values in Redis easily)
 - Avoids issues when class versions change (e.g., missing serialVersionUID or class structure changes)
 - Interoperable if you later switch languages or clients
 
-##Dependencies
+## Dependencies
 - Key dependencies (in pom.xml):
 - spring-boot-starter-data-mongodb
 - spring-boot-starter-data-redis
@@ -86,4 +85,4 @@ The UserService.findByEmail(...) method is annotated with:
 - lombok
 - jakarta.validation (for entity validation)
 
-#Thank you for checking out CacheSeries3. Happy caching! 🚀
+# Thank you for checking out CacheSeries3. Happy caching! 🚀
